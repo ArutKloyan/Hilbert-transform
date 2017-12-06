@@ -1,1 +1,1 @@
-﻿The project calculate Hilbert traansform and Analytic signal of input signal, using Discrete Fourier Transform and Fast Fourier Transform.
+﻿The project calculate Hilbert transform and Analytic signal of input signal, using Discrete Fourier Transform and Fast Fourier Transform.
