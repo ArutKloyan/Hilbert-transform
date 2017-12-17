@@ -11,7 +11,8 @@ namespace fft
 	*  y - input array and FFT result
 	*  N - number of points
 	*/
-	void Myfft::fft_forward(complex<double> *y, int N) {
+	void Myfft::fft_forward(vector<complex<double>> &y) {
+		int N=size(y);
 	vector<complex<double>> b;
 	for (int i = 0; i < N; ++i) {
 		b.push_back(y[i]);
