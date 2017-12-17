@@ -54,7 +54,7 @@ void generate_test_input_signal(vector<double> &x) {
 * Calculated input polynomial
 *  x - input array
 */
-void polynomial(vector<double> & x)
+void generate_polynomial(vector<double> & x)
 {
 	int N;
 	cin >> N;
