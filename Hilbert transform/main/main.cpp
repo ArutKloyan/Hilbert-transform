@@ -4,6 +4,7 @@
 
 double input_func(double);
 void generate_test_input_signal(vector<double>&);
+void polynomial(vector<double>&);
 void check_result(vector<double>&, vector<complex<double>>&, double);
 
 int main()
@@ -45,6 +46,22 @@ void generate_test_input_signal(vector<double> &x) {
 	double t = 2 * acos((double)-1) / N;
 	for (int i = 0;i < N; ++i) {
 		x.push_back((input_func(t*i)));
+	}
+}
+
+
+/**
+* Calculated input polynomial
+*  x - input array
+*/
+void polynomial(vector<double> & x)
+{
+	int N;
+	cin >> N;
+	for (int i = 0; i <= N; ++i) {
+		double a;
+		cin >> a;
+		x.push_back(a);
 	}
 }
 
