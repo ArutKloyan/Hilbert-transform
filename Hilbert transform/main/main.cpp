@@ -4,7 +4,7 @@
 
 double input_func(double);
 void generate_test_input_signal(vector<double>&);
-void polynomial(vector<double>&);
+void generate_polynomial(vector<double>&);
 void check_result(vector<double>&, vector<complex<double>>&, double);
 
 int main()
