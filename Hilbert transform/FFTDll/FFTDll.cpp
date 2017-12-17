@@ -1,6 +1,3 @@
-// FFTDll.cpp: определяет экспортированные функции для приложения DLL.
-//
-
 #include "stdafx.h"
 #include "fftDllh.h"
 #include <stdexcept>
@@ -11,6 +8,47 @@ namespace fft
 {
 	/**
 	* Calculated Fast Fourier Transform if N=2^k
+	*  y - input array and FFT result
+	*  N - number of points
+	*/
+	void Myfft::fft_forward(complex<double> *y, int N) {
+	vector<complex<double>> b;
+	for (int i = 0; i < N; ++i) {
+		b.push_back(y[i]);
+	}
+	for (int j = N; j != 2; j /= 2) {
+		for (int k = 0; k*j < N; ++k) {
+			for (int i = 0; i < j / 2; ++i) {
+				b[k*j + i] = y[k*j + 2 * i];
+				b[(k*j + i) + j / 2] = y[k*j + 2 * i + 1];
+			}
+			for (int i = 0; i < j; ++i) {
+				y[(k*j + i)] = b[(k*j + i)];
+			}
+		}
+	}
+	
+	complex<double> w1, w2;
+	for (int j = 2; j <= N; j *= 2) {
+		for (int k = 0; k*j < N; ++k) {
+			for (int i = 0; i < j / 2; ++i) {
+				complex<double> expon = exp(complex<double>(0, -2.*(3.1415926535)*i / j));
+				w1 = y[k*j + i];
+				w2 = y[k*j + i + j / 2] * expon;
+				y[k*j + i] = w1 + w2;
+				y[k*j + i + j / 2] = w1 - w2;
+			}
+		}
+	}
+}
+	
+	
+	
+	
+	
+	
+	/**
+	* Calculated Fast Fourier Transform with recursion if N=2^k
 	*  X - input array and FFT result
 	*  N - number of points
 	*/
