@@ -11,6 +11,7 @@ namespace fft
 	class Myfft
 	{
 	public:
+		static MATHFUNCSDLL_API void fft_forward(complex<double> * X, int N);
 		static MATHFUNCSDLL_API void fft_forward_ct(complex<double> * X, int N);
 		static MATHFUNCSDLL_API void fft_inverse_ct(vector<complex<double>>& y);
 		static MATHFUNCSDLL_API void analytic_signal_fft(vector<double> &x, vector<complex<double>> &y);
