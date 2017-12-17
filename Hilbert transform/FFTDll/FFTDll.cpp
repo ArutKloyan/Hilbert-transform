@@ -111,6 +111,54 @@ namespace fft
 		fft_inverse_ct(y);
 		//  y= Analytic signal of input signal x
 	}
+	
+	
+	/**
+	* Calculated multiple of two polynomials using FFT
+	*  x - first polynomial
+	*  y - second polynomial
+	*  mul - multiple of x and y
+	*/
+	void Myfft::polinomials_mul_fft(vector<double> x, vector<double> y, vector<double> & mul) {
+	vector<complex<double>> x1, y1, mul1;
+	int N1, N2;
+	N1 = size(x);
+	N2 = size(y);
+	for (int i = 0; i < N1; ++i) {
+		x1.push_back(complex<double>(x[i], 0.0));
+	}
+	for (int i = 0; i < N2; ++i) {
+		y1.push_back(complex<double>(y[i],0.0));
+	}
+		
+	//degree of multiple is a sum of degrees
+	int N = N1 + N2;
+		
+	//FFT needs a degree of 2
+	//find the power of two which is closest to N
+	int i = 2;
+	while (i < N) {
+		i <<= 1;
+	}
+		
+	N = i;
+	for (int i = N1; i < N; ++i) {
+		x1.push_back(complex<double>(0, 0));
+	}
+	for (int i = N2; i < N; ++i) {
+		y1.push_back(complex<double>(0, 0));
+	}
+	fft_forward_ct(&(x1[0]), N);
+	fft_forward_ct(&(y1[0]), N);
+	
+	for (int i = 0; i < N; ++i) {
+		mul1.push_back(x1[i] * y1[i]);
+	}
+		fft_inverse_ct(mul1);
+	for (int i = 0; i < N; ++i)  mul.push_back(real(mul1[i]));
+	
+}
+
 
 	/**
 	* if the difference between x and y are larger than test,then programm is working bad
