@@ -17,6 +17,39 @@ namespace fft
 	for (int i = 0; i < N; ++i) {
 		b.push_back(y[i]);
 	}
+		
+	/*sort y with the property
+int k = 0;
+			while ((1 << k) < N) k++;
+
+			for (int j = 0; j < N; ++j) {
+				
+				int c = 0;
+				for (int i = 0; i < k; ++i) {
+					
+					int p = 1, m=i;
+					while (m!=0) {
+						
+						p <<= 1; --m;
+					}
+					if ((j & p) !=0) {
+						m = k - 1; 
+						int q = 1;
+						while (m!=0) {
+							q <<= 1;
+							--m;
+						}
+							q /= p;
+						c |= q;
+					}
+				}
+				b[j] = y[c];
+			}
+			for (int i = 0; i < N; ++i) {
+				y[i] = b[i];
+			}
+	*/
+//sort y
 	for (int j = N; j != 2; j /= 2) {
 		for (int k = 0; k*j < N; ++k) {
 			for (int i = 0; i < j / 2; ++i) {
