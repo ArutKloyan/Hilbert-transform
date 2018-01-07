@@ -61,5 +61,71 @@ namespace dft
 		dft_inverse(x_dft, y);
 		//  y= Analytic signal of input signal x
 	}
+	
+	
+/* Filter input signal
+ * x - input array
+ * X - filter result
+ * w0 - lower cutoff frequency
+ * w1 - higher cutoff frequency
+ * Ep - passband feature for lpf(smaller is better)
+ * Es - stopband feature for lpf(larger is better)
+ * fil = 1 : Butterworth approximation; fil = 2 : type first Chebyshev approximation
+ * pass = 1 : low-pass filter; pass = 2 : high-pass filter
+ */
+void Mydft::some_filter(vector<double> x, vector<complex<double>> &X, double w0, double w1, double Ep, double Es, int fil, int pass) {
+    if(w1 > x.size()/2) {
+        cout<<" Sampling rate is not enought ";
+        return;
+    }
+    vector<complex<double>> z,H;
+    switch(fil){
+        case 1:{ //count filter with Butterworth approximation
+            int N = log(Es / Ep) / log(w1 / w0) + 1;
+            for (int i = 0; i < int(x.size())/2 ; ++i) {
+                H.push_back((1 / sqrt(1 + pow(((i * 2 * M_PI) / w0), 2 * N) * pow(Ep, 2))));
+            }
+            break;
+        }
+        case 2:{ // count filter with type first Chebyshev approximation
+            int N = log((Es / Ep)-sqrt(pow((Es/Ep), 2) - 1)) / log((w1 / w0)-sqrt(pow((w1/w0), 2) - 1)) + 1;
+            for (int i = 0; i < int(x.size())/2 ; ++i) {
+                complex<double> m;
+                if(i * 2 * M_PI > w0){
+                    m = complex<double>(-1, 0) * log(complex<double>(double(i * 2 *M_PI) / w0, 0) - complex<double>( sqrt(-1 + pow(double(i * 2 *M_PI) / w0, 2)), 0)) * complex<double>(0, 1);
+                }
+                else {
+                    m = log(complex<double>(double(i * 2 *M_PI) / w0, 0) + complex<double>( sqrt(1 - pow(double(i * 2 *M_PI) / w0, 2)), 0) * complex<double>(0, 1)) * complex<double>(0, -1);
+                }
+                
+                H.push_back((complex<double>(1, 0) / sqrt(complex<double>(1, 0) + pow(cos(complex<double>(N, 0) * m), complex<double>(2, 0)) * pow(Ep, 2))));
+            }
+            break;
+        }
+    }
+    
+    switch(pass){
+        case 1:{ // lpf
+            break;
+        }
+        case 2:{ // hpf
+            for (int i = 0; i < int(x.size())/2 ; ++i) {
+                H[i] = complex<double>(1, 0)-H[i];
+            }
+            break;
+        }
+    }
+    
+    dft_forward(x, z);
+    for (int i = 0; i < int(z.size())/2 ; ++i) {
+        z[i] *= H[i];
+    }
+    for(int i = int(z.size())/2; i< z.size(); ++i) {
+        z[i] = -z[z.size()-i];
+    }
+    dft_inverse(z, X);
+}
+	
+
 }
 
