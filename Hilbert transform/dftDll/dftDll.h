@@ -14,5 +14,6 @@ namespace dft
 		static MATHFNCSDLL_API void dft_forward(vector<double> &x, vector<complex<double>> &y);
 		static MATHFNCSDLL_API void dft_inverse(vector<complex<double>> &y, vector<complex<double>> &x);
 		static MATHFNCSDLL_API void analytic_signal_dft(vector<double> &x, vector<complex<double>> &y);
+		static MATHFNCSDLL_API void some_filter(vector<double> x, vector<complex<double>> &X, double w0, double w1, double Ep, double Es, int fil, int pass);
 	};
 }
