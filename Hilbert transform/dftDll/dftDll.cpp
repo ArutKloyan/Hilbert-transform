@@ -63,7 +63,8 @@ namespace dft
 	}
 	
 	
-/* Filter input signal
+/**
+ * Filter input signal
  * x - input array
  * X - filter result
  * w0 - lower cutoff frequency
