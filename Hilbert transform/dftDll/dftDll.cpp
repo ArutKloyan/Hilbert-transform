@@ -82,14 +82,14 @@ void Mydft::some_filter(vector<double> x, vector<complex<double>> &X, double w0,
     vector<complex<double>> z,H;
     switch(fil){
         case 1:{ //count filter with Butterworth approximation
-            int N = log(Es / Ep) / log(w1 / w0) + 1;
+            int N = log(Es / Ep) / log(w1 / w0) + 1; //count number of poles in the filter
             for (int i = 0; i < int(x.size())/2 ; ++i) {
                 H.push_back((1 / sqrt(1 + pow(((i * 2 * M_PI) / w0), 2 * N) * pow(Ep, 2))));
             }
             break;
         }
         case 2:{ // count filter with type first Chebyshev approximation
-            int N = log((Es / Ep)-sqrt(pow((Es/Ep), 2) - 1)) / log((w1 / w0)-sqrt(pow((w1/w0), 2) - 1)) + 1;
+            int N = log((Es / Ep)-sqrt(pow((Es/Ep), 2) - 1)) / log((w1 / w0)-sqrt(pow((w1/w0), 2) - 1)) + 1; //count number of poles in the filter
             for (int i = 0; i < int(x.size())/2 ; ++i) {
                 complex<double> m;
                 if(i * 2 * M_PI > w0){
