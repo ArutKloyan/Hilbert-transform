@@ -188,8 +188,10 @@ int k = 0;
 		mul1.push_back(x1[i] * y1[i]);
 	}
 		fft_inverse_ct(mul1);
-	for (int i = 0; i < N; ++i)  mul.push_back(real(mul1[i]));
-	
+	for (int i = 0; i < N; ++i)  {
+		mul.push_back(real(mul1[i]));
+	}
+		
 }
 
 
